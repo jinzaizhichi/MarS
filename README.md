@@ -20,7 +20,7 @@
 
 | **Event**                   | **Description**                                                                                              |
 |-----------------------------|-------------------------------------------------------------------------------------------------------------|
-| 📦 Code & Tools Release | We've released the core code and tools for our order agent, including several examples for downstream applications. The associated model will be made public following its final review. Please see the **Release Overview** section below for more details. |
+| 📦 Code, Tools & Models | We release the MarS order agent, downstream examples, and 2M, 5M, and 10M order models. Please see the **Release Overview** section below for details. |
 | 🎈 ICLR 2025 Acceptance | We are thrilled to announce that our paper has been accepted to ICLR 2025! |
 | 🌐 Join Our Community   | Connect with us on 💬 [WeChat Group](doc/img/wechat_comm.jpg) and 👾 [Discord](https://discord.gg/jW8gKDDEqS) to share your feedback and insights! |
 | 🌟 First Release      | We are excited to announce our first release! Check out the repo and enjoy your journey.                  |
@@ -29,26 +29,41 @@
 
 Welcome to our project! We are excited to release the foundational code and tools designed for market simulation and analysis.
 
-**Important Note:** While our associated Hugging Face model is fully prepared, it is currently set to private awaiting final review approval. We appreciate your patience regarding its public availability.
+The following order-model sizes were evaluated:
+
+| Model size | Released | Repository |
+|------------|----------|------------|
+| 2M | ✅ | [Don-Don/mars-order-2m](https://huggingface.co/Don-Don/mars-order-2m) |
+| 5M | ✅ | [Don-Don/mars-order-5m](https://huggingface.co/Don-Don/mars-order-5m) |
+| 10M | ✅ | [Don-Don/mars-order-10m](https://huggingface.co/Don-Don/mars-order-10m) |
+| 19M | ❌ | — |
+| 44M | ❌ | — |
+| 107M | ❌ | — |
+| 221M | ❌ | — |
+| 1.02B | ❌ | — |
+
+Release approval for the larger models is currently being requested from
+Microsoft's Corporate, External, and Legal Affairs (CELA) team.
+
+![Order model scaling curve](doc/img/order-model-scaling-curve.png)
+
+Shared preprocessing and simulation assets are available from
+[Don-Don/mars-order-assets](https://huggingface.co/datasets/Don-Don/mars-order-assets).
 
 In the meantime, you can gain significant value and understanding from the core functionalities through the following examples and code explorations:
 
 **Explore Key Examples:**
 
-* **📊 Stylized Facts Report**: Evaluates 11 key market characteristics [Stylized Fact Analysis](/market_simulation/examples/report_stylized_facts.py).
-* **📈 Predict and Simulate:** Explore future prediction with [Simulation as Forecasting](/market_simulation/examples/forecast.py) example.
-* **💹 Market Impact Analysis**: Study market impacts with our [Market Impact Analysis](/market_simulation/examples/market_impact.py).
+* **📊 Stylized Facts Report**: Evaluates 11 key market characteristics [Stylized Fact Analysis](market_simulation/examples/report_stylized_facts.py).
+* **📈 Predict and Simulate:** Explore future prediction with [Simulation as Forecasting](market_simulation/examples/forecast.py) example.
+* **💹 Market Impact Analysis**: Study market impacts with our [Market Impact Analysis](market_simulation/examples/market_impact.py).
 * **✨ Interactive Exploration:** Use our [Interactive Demo](market_simulation/examples/demo/home_app.py) to run these analyses easily.
 
 **Delve into the Underlying Architecture:**
 
-* [OrderModel](/market_simulation/models/order_model.py): Understand how orders are generated.
-* [OrderState](/market_simulation/states/order_state.py): See how market states are represented and updated.
-* [OrderAgent](/market_simulation/agents/background_agent.py): Examine the agent responsible for order generation.
-
-Kindly note that the examples and demo's full functionality depends on the public release of our Hugging Face model, which will happen once the final review is finalized. We apologize for this temporary limitation and appreciate your patience.
-
-
+* [OrderModel](market_simulation/models/order_model.py): Understand how orders are generated.
+* [OrderState](market_simulation/states/order_state.py): See how market states are represented and updated.
+* [BackgroundAgent](market_simulation/agents/background_agent.py): Examine the agent responsible for order generation.
 
 ## 🖥️ Usage & Notes
 
@@ -91,11 +106,17 @@ pip install -e .[dev]
 
 We've simplified downloading all necessary components (model, converters, validation samples, and stylized facts data) using a single script:
 
-```python
+```bash
 python download.py
 ```
 
-> **Important Note**: Since our model associated the hugging face repository is currently under review and not yet public, we have temporarily made the prerequisites available (converters, validation samples, and stylized facts data, not including the model) through OneDrive. Please download the prerequisites from [OneDrive](https://onedrive.live.com/?authkey=%21ANpke9j1atGGJQQ&id=32B7EA2716739542%21130&cid=32B7EA2716739542) and place them under your `input_root_dir` in `market_simulation/conf.py` instead of running the `download.py` script.
+The 10M model is used by default. Select another model with the
+`MODEL_SERVING__REPO_ID` environment variable:
+
+```bash
+export MODEL_SERVING__REPO_ID=Don-Don/mars-order-2m
+python download.py
+```
 
 > Note: The download requires sufficient disk space and may take some time depending on your internet connection.
 

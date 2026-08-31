@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(
     name="market_simulation",
     version="0.0.1",
-    packages=["market_simulation", "mlib"],
+    packages=find_packages(),
     description="An awesome package that does something",
     install_requires=[
         "pandas==2.2.3",

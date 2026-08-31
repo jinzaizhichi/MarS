@@ -15,7 +15,8 @@ def cache_and_download() -> None:
 
     # download pre-requisites
     snapshot_download(
-        repo_id=C.model_serving.repo_id,
+        repo_id=C.model_serving.assets_repo_id,
+        repo_type="dataset",
         local_dir=C.directory.input_root_dir,
         allow_patterns=["converters/*", "validation-samples/*", "stylized-facts/*"],
     )

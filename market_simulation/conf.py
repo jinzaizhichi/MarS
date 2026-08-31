@@ -7,7 +7,8 @@ ENV_NESTED_DELIMITER = "__"
 class ModelServing(BaseModel):
     """Config for model serving."""
 
-    repo_id: str = "microsoft/mars-order-model"
+    repo_id: str = "Don-Don/mars-order-10m"
+    assets_repo_id: str = "Don-Don/mars-order-assets"
     model_name: str = "order-model"
     temperature: float = 1.0
     ip: str = "localhost"
