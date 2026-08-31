@@ -33,6 +33,8 @@ class OrderTokenizer(nn.Module, PyTorchModelHubMixin):
         self.emb_price_level = nn.Embedding(num_bins_price_level, self.emb_dim)
         self.emb_pred_order_volume = nn.Embedding(num_bins_pred_order_volume, self.emb_dim)
         self.emb_order_interval = nn.Embedding(num_bins_order_interval, self.emb_dim)
+        self.emb_volume_ratio = nn.Embedding(self.num_ratio_slots + 1, self.emb_dim)
+        self.emb_trans_ratio = nn.Embedding(self.num_ratio_slots + 1, self.emb_dim)
         self.emb_chg_to_open = nn.Embedding(self.max_chg_slots * 2 + 1, self.emb_dim)
         self.emb_time_to_open = nn.Embedding(14400 // 5 + 1, self.emb_dim)  # group every 5 seconds..
         self.lob_tokenizer = nn.Sequential(
@@ -46,6 +48,9 @@ class OrderTokenizer(nn.Module, PyTorchModelHubMixin):
         dtype = next(self.parameters()).dtype
         assert features.size(1) == self.num_max_orders * self.dim_order
         features = features.reshape((batch_size, self.num_max_orders, self.dim_order))
+        features = features.clone()
+        features[:, :, 3] -= features[:, 0, 3].unsqueeze(1)
+        features[:, :, 4] -= features[:, 0, 4].unsqueeze(1)
         features = features.reshape((batch_size * self.num_max_orders, self.dim_order))
         (order_type, price_level, pred_order_volume, order_interval) = self.split_order_index(
             features[:, 0],
