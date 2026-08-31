@@ -45,7 +45,11 @@ The following order-model sizes were evaluated:
 Release approval for the larger models is currently being requested from
 Microsoft's Corporate, External, and Legal Affairs (CELA) team.
 
-![Order model scaling curve](doc/img/order-model-scaling-curve.png)
+The figure below shows the order-model scaling-law curve discussed in the
+[MarS paper](https://arxiv.org/abs/2409.07486). It illustrates how validation
+loss decreases as the model size and number of training tokens increase.
+
+<img src="doc/img/order-model-scaling-curve.png" alt="Order model scaling-law curve" width="390">
 
 Shared preprocessing and simulation assets are available from
 [Don-Don/mars-order-assets](https://huggingface.co/datasets/Don-Don/mars-order-assets).
